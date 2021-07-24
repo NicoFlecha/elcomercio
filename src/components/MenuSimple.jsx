@@ -3,7 +3,7 @@ import { Button, Menu, MenuItem } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 
 
-function MenuSimple (props) {
+function MenuSimple ({item}) {
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const handleClick = (event) => {
@@ -16,38 +16,46 @@ function MenuSimple (props) {
 
     const useStyles = makeStyles({
         colorMain: {
-            color: 'red'
+            color: 'white'
+        },
+        fontBold: {
+            fontWeight: 'bold',
+            color: 'inherit'
         }
     })
 
-    return (<>
-        <Button className={useStyles.colorMain} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-            {props.item.titulo}
-        </Button>
-        <Menu
-            id="simple-menu"
-            anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'center',
-            }}
-            transformOrigin={{
-                vertical: 'top',
-                horizontal: 'center',
-              }}
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-        >
+    const styles = useStyles();
+
+    return (
         <>
-        {
-            props.item.elementos.map(elemento => {
-                return <MenuItem onClick={handleClose}>{elemento.titulo}</MenuItem>               
-            })
-        }
+            <Button className={[styles.colorMain, styles.fontBold]} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                {item.titulo}
+            </Button>
+            <Menu
+                id="simple-menu"
+                // anchorOrigin={{
+                //     vertical: 'bottom',
+                //     horizontal: 'center',
+                // }}
+                // transformOrigin={{
+                //     vertical: 'top',
+                //     horizontal: 'center',
+                //   }}
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+            >
+                <div>
+                {
+                    item.elementos.map(elemento => {
+                        return <MenuItem onClick={handleClose}>{elemento.titulo}</MenuItem>               
+                    })
+                }
+                </div>
+            </Menu>
         </>
-        </Menu>
-    </>)
+    )
 }
 
 export default MenuSimple;

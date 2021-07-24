@@ -1,6 +1,5 @@
 import { Container } from '@material-ui/core';
 import './App.css';
-import Header from './components/Header';
 import NavBar from './components/NavBar';
 
 const menuItems = [
