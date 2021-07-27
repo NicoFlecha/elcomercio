@@ -27,7 +27,7 @@ function MenuSimple ({item}) {
     const styles = useStyles();
 
     return (
-        <>
+        <MenuItem>
             <Button className={[styles.colorMain, styles.fontBold]} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                 {item.titulo}
             </Button>
@@ -54,7 +54,7 @@ function MenuSimple ({item}) {
                 }
                 </div>
             </Menu>
-        </>
+        </MenuItem>
     )
 }
 
