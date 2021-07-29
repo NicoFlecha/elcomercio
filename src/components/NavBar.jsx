@@ -3,6 +3,7 @@ import { alpha, makeStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, IconButton, Typography, InputBase, Badge, MenuItem, Menu, Button } from '@material-ui/core';
 import { Store as StoreIcon, Search as SearchIcon, AccountCircle, More as MoreIcon} from "@material-ui/icons";
 import MenuSimple from './MenuSimple';
+import CartWidget from './CartWidget';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -121,16 +122,9 @@ const NavBar = (props) => {
       onClose={handleMobileMenuClose}
     >
         <MenuItems items={items} />
-        <MenuItem onClick={handleProfileMenuOpen}>
-            <IconButton
-                aria-label="account of current user"
-                aria-controls="primary-search-account-menu"
-                aria-haspopup="true"
-                color="inherit"
-            >
-                <AccountCircle />
-            </IconButton>
-            <p>Profile</p>
+        <MenuItem>
+          <CartWidget />
+          Carrito
         </MenuItem>
     </Menu>
   );
@@ -181,7 +175,7 @@ const MenuItems = ({items}, mobile = false) => {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <MenuItems items={props} />
-            <IconButton
+            {/* <IconButton
               edge="end"
               aria-label="account of current user"
               aria-controls={menuId}
@@ -190,7 +184,8 @@ const MenuItems = ({items}, mobile = false) => {
               color="inherit"
             >
               <AccountCircle />
-            </IconButton>
+            </IconButton> */}
+            <CartWidget color="white" />
           </div>
           <div className={classes.sectionMobile}>
             <IconButton

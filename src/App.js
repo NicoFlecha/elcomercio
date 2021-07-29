@@ -1,5 +1,6 @@
 import { Container } from '@material-ui/core';
 import './App.css';
+import ItemListContainer from './components/ItemListContainer';
 import NavBar from './components/NavBar';
 
 const menuItems = [
@@ -20,9 +21,7 @@ function App() {
   return (
     <div className="App">
       <NavBar items={menuItems} />
-      <Container>
-        <h1 style={{textAlign: 'left'}}>Ofertas</h1>
-      </Container>
+      <ItemListContainer greeting="Bienvenido usuario" />
     </div>
   );
 }
