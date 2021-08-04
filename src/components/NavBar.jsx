@@ -1,7 +1,7 @@
 import React from 'react';
 import { alpha, makeStyles } from '@material-ui/core/styles';
-import { AppBar, Toolbar, IconButton, Typography, InputBase, Badge, MenuItem, Menu, Button } from '@material-ui/core';
-import { Store as StoreIcon, Search as SearchIcon, AccountCircle, More as MoreIcon} from "@material-ui/icons";
+import { AppBar, Toolbar, IconButton, Typography, InputBase, MenuItem, Menu, Button } from '@material-ui/core';
+import { Store as StoreIcon, Search as SearchIcon, More as MoreIcon} from "@material-ui/icons";
 import MenuSimple from './MenuSimple';
 import CartWidget from './CartWidget';
 
@@ -77,10 +77,6 @@ const NavBar = (props) => {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
@@ -130,14 +126,14 @@ const NavBar = (props) => {
   );
 
 const MenuItems = ({items}, mobile = false) => {
-    let menuItems = items.items.map(item => {
+    let menuItems = items.items.map((item, index) => {
         let menuItem;
         switch (item.tipo) {
             case 'dropdown':
-                menuItem = <MenuSimple item={item}></MenuSimple>
+                menuItem = <MenuSimple key={index} item={item}></MenuSimple>
             break;
             default:
-                menuItem = <MenuItem><Button style={{color: mobile ? "inherit" : "white"}}>{item.titulo}</Button></MenuItem>
+                menuItem = <MenuItem key={index}><Button style={{color: mobile ? "inherit" : "white"}}>{item.titulo}</Button></MenuItem>
         }
         return menuItem;
     })
