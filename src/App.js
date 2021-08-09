@@ -1,7 +1,8 @@
 import './App.css';
-import ItemCount from './components/ItemCount';
+// import ItemCount from './components/ItemCount';
 import ItemListContainer from './components/ItemListContainer';
 import NavBar from './components/NavBar';
+import ItemList from './components/ItemList';
 
 const menuItems = [
   {
@@ -26,7 +27,7 @@ function App() {
     <div className="App">
       <NavBar items={menuItems} />
       <ItemListContainer greeting="Bienvenido usuario">
-        <ItemCount stockRaw={8} initial={2} onAdd={mostrarCantidad} />
+        <ItemList />
       </ItemListContainer>
     </div>
   );
