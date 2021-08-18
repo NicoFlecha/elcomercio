@@ -32,19 +32,19 @@ const ItemList = () => {
           pictureUrl: 'https://www.macstation.com.ar/img/productos/small/1675-1111.jpg'
         },
         {
-          id: 1,
+          id: 2,
           title: 'Samsung Galaxy Z Flip',
           price: 1500,
           pictureUrl: 'https://cloudfront-eu-central-1.images.arcpublishing.com/larazon/X2R22FSTWVHAJI2CFHVHFSESXY.jpg'
         },
         {
-          id: 1,
+          id: 3,
           title: 'Celular',
           price: 150,
           pictureUrl: 'https://www.macstation.com.ar/img/productos/small/1675-1111.jpg'
         },
         {
-          id: 1,
+          id: 4,
           title: 'Celular',
           price: 150,
           pictureUrl: 'https://www.macstation.com.ar/img/productos/small/1675-1111.jpg'
@@ -53,14 +53,14 @@ const ItemList = () => {
 
     const [items, setItems] = useState(null);
 
+    const getProducts = async () => {
+        const response = await fetch('https://api.mercadolibre.com/sites/MLA/search?category=MLA1055');
+        const data = await response.json();
+        setItems(data.results);
+    }
+
     useEffect(() => {
-        setTimeout(() => {
-            return new Promise((res, rej) => {
-                res(products);
-            }).then(response => {
-                setItems(response);
-            })
-        }, 3000);
+        getProducts();
     }, [])
 
     return items ? (

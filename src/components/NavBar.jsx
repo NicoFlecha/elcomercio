@@ -4,6 +4,7 @@ import { AppBar, Toolbar, IconButton, Typography, InputBase, MenuItem, Menu, But
 import { Store as StoreIcon, Search as SearchIcon, More as MoreIcon} from "@material-ui/icons";
 import MenuSimple from './MenuSimple';
 import CartWidget from './CartWidget';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -67,6 +68,9 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
+  link: {
+    color: 'inherit', textDecoration: 'none'
+  }
 }));
 
 const NavBar = (props) => {
@@ -125,15 +129,28 @@ const NavBar = (props) => {
     </Menu>
   );
 
-const MenuItems = ({items}, mobile = false) => {
-    let menuItems = items.items.map((item, index) => {
+const MenuItems = (mobile = false) => {
+    const items = [
+      // {
+      //   titulo: 'Categorias',
+      //   tipo: 'dropdown',
+      //   elementos: [
+      //     {titulo: 'Celulares'},
+      //     {titulo: 'Tablets'},
+      //     {titulo: 'Laptops'}
+      //   ]
+      // },
+      {titulo: 'Productos', route: 'products'},
+      {titulo: 'Ayuda'}
+    ];
+    let menuItems = items.map((item, index) => {
         let menuItem;
         switch (item.tipo) {
             case 'dropdown':
                 menuItem = <MenuSimple key={index} item={item}></MenuSimple>
             break;
             default:
-                menuItem = <MenuItem key={index}><Button style={{color: mobile ? "inherit" : "white"}}>{item.titulo}</Button></MenuItem>
+                menuItem = <MenuItem key={index}><Link className={classes.link} to='/products'><Button style={{color: mobile ? "inherit" : "white"}}>{item.titulo}</Button></Link></MenuItem>
         }
         return menuItem;
     })
@@ -153,7 +170,7 @@ const MenuItems = ({items}, mobile = false) => {
             <StoreIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            ElComercio
+            <Link to='/' className={classes.link}>ElComercio</Link>
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
