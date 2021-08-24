@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Menu, MenuItem } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
+import { Link } from "react-router-dom";
 
 
 function MenuSimple ({item}) {
@@ -49,7 +50,7 @@ function MenuSimple ({item}) {
                 <div>
                 {
                     item.elementos.map(elemento => {
-                        return <MenuItem onClick={handleClose}>{elemento.titulo}</MenuItem>               
+                        return <MenuItem onClick={handleClose}><Link to={`/category/${elemento.id}`}>{elemento.titulo}</Link></MenuItem>               
                     })
                 }
                 </div>

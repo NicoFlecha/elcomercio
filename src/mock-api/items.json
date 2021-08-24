@@ -1,0 +1,45 @@
+{
+    "results":
+    [
+        {
+            "id": 1,
+            "title": "Iphone 12",
+            "price": 1100,
+            "image": "https://www.macstation.com.ar/img/productos/small/1675-1111.jpg",
+            "category": 1,
+            "stock": 100
+        },
+        {
+            "id": 2,
+            "title": "Samsung Galaxy Z Flip",
+            "price": 1500,
+            "image": "https://cloudfront-eu-central-1.images.arcpublishing.com/larazon/X2R22FSTWVHAJI2CFHVHFSESXY.jpg",
+            "category": 1,
+            "stock": 20
+        },
+        {
+            "id": 3,
+            "title": "Celular",
+            "price": 150,
+            "image": "https://www.macstation.com.ar/img/productos/small/1675-1111.jpg",
+            "category": 1,
+            "stock": 50
+        },
+        {
+            "id": 4,
+            "title": "iPad",
+            "price": 150,
+            "image": "https://ipoint.com.ar/19887-large_default/ipad-102-wi-fi-32gb-8va-generacion-space-gray.jpg",
+            "category": 2,
+            "stock": 200
+        },
+        {
+            "id": 5,
+            "title": "Laptop",
+            "price": 1550,
+            "image": "https://m.media-amazon.com/images/I/71h6PpGaz9L._AC_SL1500_.jpg",
+            "category": 3,
+            "stock": 5
+        }
+    ]
+}

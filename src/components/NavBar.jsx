@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, IconButton, Typography, InputBase, MenuItem, Menu, Button } from '@material-ui/core';
 import { Store as StoreIcon, Search as SearchIcon, More as MoreIcon} from "@material-ui/icons";
 import MenuSimple from './MenuSimple';
 import CartWidget from './CartWidget';
 import { Link } from 'react-router-dom';
+import NavBarSearchResults from './NavBarSearchResults';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -74,6 +75,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const NavBar = (props) => {
+
+  const [search, setSearch] = useState('');
+
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -131,16 +135,16 @@ const NavBar = (props) => {
 
 const MenuItems = (mobile = false) => {
     const items = [
-      // {
-      //   titulo: 'Categorias',
-      //   tipo: 'dropdown',
-      //   elementos: [
-      //     {titulo: 'Celulares'},
-      //     {titulo: 'Tablets'},
-      //     {titulo: 'Laptops'}
-      //   ]
-      // },
-      {titulo: 'Productos', route: 'products'},
+      {
+        titulo: 'Categorias',
+        tipo: 'dropdown',
+        elementos: [
+          {titulo: 'Celulares', id: 1},
+          {titulo: 'Tablets', id: 2},
+          {titulo: 'Laptops', id: 3}
+        ]
+      },
+      {titulo: 'Productos', route: 'items'},
       {titulo: 'Ayuda'}
     ];
     let menuItems = items.map((item, index) => {
@@ -150,7 +154,7 @@ const MenuItems = (mobile = false) => {
                 menuItem = <MenuSimple key={index} item={item}></MenuSimple>
             break;
             default:
-                menuItem = <MenuItem key={index}><Link className={classes.link} to='/products'><Button style={{color: mobile ? "inherit" : "white"}}>{item.titulo}</Button></Link></MenuItem>
+                menuItem = <MenuItem key={index}><Link className={classes.link} to={`/${item.route}`}><Button style={{color: mobile ? "inherit" : "white"}}>{item.titulo}</Button></Link></MenuItem>
         }
         return menuItem;
     })

@@ -17,13 +17,14 @@ function App() {
         <Route exact path='/' >
           <Home />
         </Route>
-      </Switch>
-      <Switch>
-        <Route exact path='/products'>
+        <Route exact path='/items'>
           <ProductList />
         </Route>
-        <Route exact path='/products/:id'>
+        <Route exact path='/items/:id'>
           <Product />
+        </Route>
+        <Route exact path='/category/:id'>
+          <ProductList />
         </Route>
       </Switch>
     </BrowserRouter>
