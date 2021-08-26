@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardActions, Grid, Button } from '@material-ui/core';
 import { Add as AddIcon, Remove as RemoveIcon } from '@material-ui/icons';
 
-const ItemCount = ({stockRaw = 0, initial = 0, onAdd}) => {
+const ItemCount = ({stockRaw = 0, initial = 0, idItem, onAdd}) => {
 
     const [count, setCount] = useState(initial);
     const [stock, setStock] = useState(stockRaw);
@@ -15,7 +15,7 @@ const ItemCount = ({stockRaw = 0, initial = 0, onAdd}) => {
     }, [count])
 
     return (
-        <div style={{minWidth: '250px', maxWidth: '300px', margin: '0 auto'}}>
+        <div style={{minWidth: '250px', maxWidth: '300px'}}>
             <Card variant="outlined" style={{backgroundColor: '#F4F5F4'}}>
                 <CardContent>
                     <Grid container justifyContent="space-around" alignItems="center" style={{backgroundColor: 'white', borderRadius: '5px'}}>
@@ -37,7 +37,7 @@ const ItemCount = ({stockRaw = 0, initial = 0, onAdd}) => {
                             </CardActions>
                         </Grid>
                     </Grid>
-                    <Button variant="outlined" size="large" style={{marginTop: '1rem', backgroundColor: 'white'}} onClick={() => {onAdd(count); setStock(stock - count); setCount(0)}} disabled={disabled}>Agregar al Carrito</Button>
+                    <Button variant="outlined" size="large" style={{marginTop: '1rem', backgroundColor: 'white', width: '100%'}} onClick={() => {onAdd({quantity: count, item: idItem}); setStock(stock - count); setCount(0)}} disabled={disabled}>Agregar al Carrito</Button>
                 </CardContent>
             </Card>
         </div>

@@ -1,13 +1,38 @@
-import { Card, Container, Grid } from '@material-ui/core';
+import { Button, Card, Container, Grid } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { Skeleton } from '@material-ui/lab';
 import Price from './Price';
 import ItemCount from './ItemCount';
+import { useState, useEffect } from 'react';
 
-const ItemDetail = ({title, price, image, stock}) => {
+const ItemDetail = ({id, title, price, image, stock}) => {
 
-    const idItem = () => {
-        console.log(title);
+    const [cartItems, setCartItems] = useState([]);
+    const [isItemAdded, setIsItemAdded] = useState(false);
+
+    const checkIfExists = item => {
+        return item.id == id;
+    }
+
+    const addItem = (item) => {
+
+        let items = cartItems;
+        
+        let found = false;
+
+        items.forEach((cartItem, i) => {
+            if (cartItem.item == id) {
+                console.log(item);
+                items[i].quantity += item.quantity;
+                found = true;
+            }
+        })
+
+        if (!found) items.push(item);
+
+        setCartItems(items);
+        setIsItemAdded(true);
+
     }
 
     if (!image) {
@@ -43,19 +68,25 @@ const ItemDetail = ({title, price, image, stock}) => {
     return (
         <Container style={{marginTop: '2rem'}}>
             <Link to='/items'>Volver a Productos</Link>
-            <Card style={{marginTop: '2rem'}}>
+            <Card style={{marginTop: '2rem', padding: '3rem'}}>
                 <Grid container >
                     <Grid item sm={12} md={7} style={{width: '100%'}}>
                         <div style={{height: '400px', display: 'flex', justifyContent: 'center'}}>
-                            <img src={image} style={{height: '100%'}} />
+                            <img src={image} style={{width: '100%'}} />
                         </div>
                     </Grid>
-                    <Grid item sm={12} md={5}>
+                    <Grid item sm={12} md={5} style={{width: '100%'}}>
                         <Container style={{height: '100%'}}>
                             <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-around', height: '100%'}}>
                                 <h1>{title}</h1>
                                 <h2>$ <Price amount={price}/></h2>
-                                <ItemCount stockRaw={stock} onAdd={idItem} />
+                                {
+                                    isItemAdded 
+                                    ? <Link to="/cart" style={{textDecoration: 'none', textAlign: 'center'}}>
+                                        <Button variant="contained" color="primary" size="large" style={{width: '80%'}}>Terminar Compra</Button>
+                                      </Link>
+                                    : <ItemCount idItem={id} stockRaw={stock} onAdd={addItem} />
+                                }
                             </div>
                         </Container>
                     </Grid>
