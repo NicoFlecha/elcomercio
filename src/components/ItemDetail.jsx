@@ -3,37 +3,12 @@ import { Link } from 'react-router-dom';
 import { Skeleton } from '@material-ui/lab';
 import Price from './Price';
 import ItemCount from './ItemCount';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { CartContext } from '../context/CartContext';
 
 const ItemDetail = ({id, title, price, image, stock}) => {
 
-    const [cartItems, setCartItems] = useState([]);
-    const [isItemAdded, setIsItemAdded] = useState(false);
-
-    const checkIfExists = item => {
-        return item.id == id;
-    }
-
-    const addItem = (item) => {
-
-        let items = cartItems;
-        
-        let found = false;
-
-        items.forEach((cartItem, i) => {
-            if (cartItem.item == id) {
-                console.log(item);
-                items[i].quantity += item.quantity;
-                found = true;
-            }
-        })
-
-        if (!found) items.push(item);
-
-        setCartItems(items);
-        setIsItemAdded(true);
-
-    }
+    const { addItem } = useContext(CartContext);
 
     if (!image) {
         return (
@@ -80,13 +55,7 @@ const ItemDetail = ({id, title, price, image, stock}) => {
                             <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-around', height: '100%'}}>
                                 <h1>{title}</h1>
                                 <h2>$ <Price amount={price}/></h2>
-                                {
-                                    isItemAdded 
-                                    ? <Link to="/cart" style={{textDecoration: 'none', textAlign: 'center'}}>
-                                        <Button variant="contained" color="primary" size="large" style={{width: '80%'}}>Terminar Compra</Button>
-                                      </Link>
-                                    : <ItemCount idItem={id} stockRaw={stock} onAdd={addItem} />
-                                }
+                                <ItemCount idItem={id} stockRaw={stock} onAdd={addItem} />
                             </div>
                         </Container>
                     </Grid>
