@@ -11,7 +11,7 @@ const SkeletonItemList = ({q = 1}) => {
 
     for(let i = 0; i < q; i++) {
         items.push(
-            <div style={{padding: '1rem'}}>
+            <div key={i} style={{padding: '1rem'}}>
                 <SkeletonItem />
             </div>
         )
@@ -27,7 +27,7 @@ const ItemList = ({items}) => {
             {
                 items.map(item => {
                     return (
-                        <Grid item spacing={10} xs={10} sm={6} md={4} xl={3}>
+                        <Grid item xs={12} md={4} lg={3}>
                             <Item {...item} />
                         </Grid>
                     )

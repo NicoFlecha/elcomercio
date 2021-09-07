@@ -28,8 +28,8 @@ function MenuSimple ({item}) {
     const styles = useStyles();
 
     return (
-        <MenuItem>
-            <Button className={[styles.colorMain, styles.fontBold]} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+        <MenuItem key={item.id}>
+            <Button className={styles.colorMain, styles.fontBold} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                 {item.titulo}
             </Button>
             <Menu
@@ -50,7 +50,7 @@ function MenuSimple ({item}) {
                 <div>
                 {
                     item.elementos.map(elemento => {
-                        return <MenuItem onClick={handleClose}><Link to={`/category/${elemento.id}`}>{elemento.titulo}</Link></MenuItem>               
+                        return <MenuItem key={elemento.id} onClick={handleClose}><Link to={`/category/${elemento.id}`}>{elemento.titulo}</Link></MenuItem>               
                     })
                 }
                 </div>

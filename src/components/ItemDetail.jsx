@@ -55,7 +55,7 @@ const ItemDetail = ({id, title, price, image, stock}) => {
                             <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-around', height: '100%'}}>
                                 <h1>{title}</h1>
                                 <h2>$ <Price amount={price}/></h2>
-                                <ItemCount idItem={id} stockRaw={stock} onAdd={addItem} />
+                                <ItemCount item={{id, title, price, image, stock}} stockRaw={stock} onAdd={addItem} />
                             </div>
                         </Container>
                     </Grid>

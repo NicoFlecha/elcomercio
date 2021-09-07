@@ -1,35 +1,49 @@
 import { Container } from "@material-ui/core";
 import { useState, useEffect } from "react";
 import ItemList from "./ItemList";
-import Items from './../mock-api/items.json';
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from '../firebase';
 
 const ItemListContainer = ({greeting = 'Hola usuario', category = null}) => {
 
     const [items, setItems] = useState([]);
 
-    // const getProductsAPI = async () => {
-    //     const response = await fetch('https://api.mercadolibre.com/sites/MLA/search?category=MLA1055');
-    //     const data = await response.json();
-    //     setItems(data.results);
-    // }
-
     const getProducts = async (category) => {
-        setTimeout(async () => {
 
-            let data = [];
+        if (category) {
 
-            if (category) {
-                data = Items.results.filter(item => item.category == category);
-            } else {
-                data = Items.results;
-            }
+            const productsRef = collection(db, 'products');
 
-            setItems(data);
+            const q = query(productsRef, where("categoryId", "==", parseInt(category)));
 
-        }, 2000)
+            const productsSnapshot = await getDocs(q);
+
+            const products = productsSnapshot.docs.map(product => {
+                return {id: product.id, ...product.data()};
+            })
+
+            console.log(products);
+            setItems(products);
+
+        } else {
+
+            const productsSnapshot = await getDocs(collection(db, 'products'));
+
+            const products = productsSnapshot.docs.map(product => {
+                return {id: product.id, ...product.data()};
+            })
+
+            console.log(products);
+            setItems(products);
+   
+        }
+
     }
 
     useEffect(() => {
+
+        console.log(category);
+
         getProducts(category);
 
         return setItems([]);

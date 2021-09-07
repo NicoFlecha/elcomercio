@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ItemDetail from './ItemDetail';
-import Items from './../mock-api/items.json';
+import { doc, getDoc } from '@firebase/firestore';
+import { db } from '../firebase';
 
 const ItemDetailContainer = () => {
 
@@ -9,22 +10,15 @@ const ItemDetailContainer = () => {
 
     const { id } = useParams();
 
-    const getDataAPI = async () => {
-        const response = await fetch(`https://api.mercadolibre.com/items/${id}`);
-        const data = await response.json();
-        setItem(data);
-    }
+    const getData = async (id) => {
+        const dataRef = doc(db, 'products', id);
+        const dataSnap = await getDoc(dataRef);
 
-    const getData = async () => {
-        setTimeout(async () => {
-            let items = Items.results;
-            let item = items.filter(i => i.id == id);
-            setItem(item[0]);
-        }, 1000)
+        setItem({id: dataSnap.id, ...dataSnap.data()});
     }
 
     useEffect(() => {
-        getData();
+        getData(id);
         return setItem([]);
     }, [id]);
 

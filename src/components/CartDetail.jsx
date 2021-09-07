@@ -2,11 +2,12 @@ import { Button, Container, Grid } from "@material-ui/core";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
-import items from '../mock-api/items.json';
+import { Delete as DeleteIcon } from "@material-ui/icons";
+import ItemCount from "./ItemCount";
 
 export const CartDetail = () => {
     
-    const { cartItems, clearCart } = useContext(CartContext);
+    const { cartItems, clearCart, addItem, removeItem } = useContext(CartContext);
 
     return (
         <Container>
@@ -18,21 +19,40 @@ export const CartDetail = () => {
                             {
                                 cartItems.map(item => (
                                     <Grid container>
-                                        <Grid xs={10} md={6} style={{backgroundColor: 'lightgray', margin: '1rem 0', padding: '1rem', borderRadius: '10px'}}>
-                                            <Grid container>
-                                                <Grid xs={6}>
+                                        <Grid item xs={1}></Grid>
+                                        <Grid item xs={8} md={6} style={{margin: '0.5rem 0', padding: '1rem'}}>
+                                            <Grid container style={{backgroundColor: 'lightgray', borderRadius: '10px', padding: '1rem'}}>
+                                                <Grid item xs={6}>
                                                     <div style={
-                                                        {width: '200px', height: '200px', backgroundColor: 'white', borderRadius: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center'}
+                                                        {width: '100px', height: '100px', backgroundColor: 'white', borderRadius: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center'}
                                                     }>
-                                                        <img src={items.results.find(i => i.id == item.id).image} style={{borderRadius: '10px', width: '100%'}} />
+                                                        <img src={item.image} style={{borderRadius: '10px', width: '100%'}} alt={item.title} />
                                                     </div>
                                                 </Grid>
-                                                <Grid xs={6} style={{textAlign: 'center'}}>
-                                                    <h3>{items.results.find(i => i.id == item.id).title}</h3>
-                                                    -
-                                                    {item.quantity}
+                                                <Grid item xs={6} style={{textAlign: 'center'}}>
+                                                    <h3 style={{margin: 0}}>
+                                                        <Link style={{color: 'inherit', textDecoration: 'none'}} to={`/items/${item.id}`}>{item.title}</Link>
+                                                    </h3>
                                                 </Grid>
                                             </Grid>
+                                        </Grid>
+                                        <Grid item xs={2} md={3} style={{margin: '0.5rem 0', padding: '1rem'}}>
+                                            <div style={{height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                                <ItemCount 
+                                                    minimal={true} 
+                                                    item={{...item}} 
+                                                    stockRaw={item.stock} 
+                                                    onAdd={addItem}
+                                                    initial={item.quantity}
+                                                />
+                                            </div>
+                                        </Grid>
+                                        <Grid item xs={1}>
+                                            <div style={{height: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                                                <Button variant="text" onClick={() => removeItem(item)}>
+                                                    <DeleteIcon color='secondary' />
+                                                </Button>
+                                            </div>
                                         </Grid>
                                     </Grid>
                                 ))

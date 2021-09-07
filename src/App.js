@@ -5,47 +5,44 @@ import NavBar from './components/NavBar';
 import Home from './pages/Home';
 import ProductList from './pages/ProductList';
 import Product from './pages/Product';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Cart } from './pages/Cart';
 
-const mostrarCantidad = (count) => {
-  console.log(`Agregaste ${count} unidades al carrito`);
-}
-
 function App() {
-
+  
   const [cartItems, setCartItems] = useState([]);
+  const [cartLength, setCartLength] = useState(0);
 
   const addItem = (item) => {
-
-    console.log("el item", item);
 
     let items = cartItems;
     
     let found = false;
 
-    items.forEach((cartItem, i) => {
-        if (cartItem.id == item.id) {
+    console.log(item);
+
+    cartItems.forEach((cartItem, i) => {
+        if (cartItem.id === item.id) {
             console.log(item);
             items[i].quantity += item.quantity;
             found = true;
         }
     })
 
-    if (!found) items.push(item);
-
-    setCartItems(items);
-
-    console.log(cartItems);
+    if (!found) {
+      setCartItems([...cartItems, item])
+    } else {
+      setCartItems([...items]);
+    };
 
   }
 
   const removeItem = (item) => {
     let items = cartItems;
 
-    items = items.filter(cartItem => cartItem.id != item);
+    items = items.filter(cartItem => cartItem.id !== item.id);
 
-    setCartItems(items);
+    setCartItems([...items]);
   }
 
   const clearCart = () => {
@@ -53,11 +50,23 @@ function App() {
   }
 
   const isInCart = (idItem) => {
-    return cartItems.find(i => i.id == idItem);
+    return cartItems.find(i => i.id === idItem);
   }
 
+  useEffect(() => {
+
+    let length = 0;
+
+      cartItems.forEach(item => {
+        length += item.quantity;
+      })
+
+    setCartLength(length);
+
+  }, [cartItems])
+
   return (
-    <CartContext.Provider value={{cartItems, setCartItems, addItem, removeItem, clearCart, isInCart}}>
+    <CartContext.Provider value={{cartItems, setCartItems, addItem, removeItem, clearCart, isInCart, cartLength}}>
       <BrowserRouter>
         <NavBar></NavBar>
         <Switch>

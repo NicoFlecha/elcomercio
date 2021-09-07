@@ -5,7 +5,6 @@ import { Store as StoreIcon, Search as SearchIcon, More as MoreIcon} from "@mate
 import MenuSimple from './MenuSimple';
 import CartWidget from './CartWidget';
 import { Link } from 'react-router-dom';
-import NavBarSearchResults from './NavBarSearchResults';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -125,7 +124,7 @@ const NavBar = (props) => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-        <MenuItems items={items} />
+        <MenuItems/>
         <MenuItem>
           <CartWidget />
           Carrito
@@ -133,9 +132,11 @@ const NavBar = (props) => {
     </Menu>
   );
 
-const MenuItems = (mobile = false) => {
+const MenuItems = () => {
+    let mobile = false;
     const items = [
       {
+        id: 1,
         titulo: 'Categorias',
         tipo: 'dropdown',
         elementos: [
@@ -144,8 +145,8 @@ const MenuItems = (mobile = false) => {
           {titulo: 'Laptops', id: 3}
         ]
       },
-      {titulo: 'Productos', route: 'items'},
-      {titulo: 'Ayuda'}
+      {id: 2, titulo: 'Productos', route: 'items'},
+      {id: 3, titulo: 'Ayuda'}
     ];
     let menuItems = items.map((item, index) => {
         let menuItem;
@@ -192,16 +193,6 @@ const MenuItems = (mobile = false) => {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <MenuItems items={props} />
-            {/* <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton> */}
             <CartWidget color="white" />
           </div>
           <div className={classes.sectionMobile}>
