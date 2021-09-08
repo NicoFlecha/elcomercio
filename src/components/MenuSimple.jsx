@@ -30,7 +30,7 @@ function MenuSimple ({item}) {
     return (
         <MenuItem key={item.id}>
             <Button className={styles.colorMain, styles.fontBold} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                {item.titulo}
+                {item.name}
             </Button>
             <Menu
                 id="simple-menu"
@@ -50,7 +50,7 @@ function MenuSimple ({item}) {
                 <div>
                 {
                     item.elementos.map(elemento => {
-                        return <MenuItem key={elemento.id} onClick={handleClose}><Link to={`/category/${elemento.id}`}>{elemento.titulo}</Link></MenuItem>               
+                        return <MenuItem key={elemento.categoryId} onClick={handleClose}><Link to={`/category/${elemento.categoryId}`}>{elemento.name}</Link></MenuItem>               
                     })
                 }
                 </div>

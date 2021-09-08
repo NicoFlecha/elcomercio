@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, IconButton, Typography, InputBase, MenuItem, Menu, Button } from '@material-ui/core';
 import { Store as StoreIcon, Search as SearchIcon, More as MoreIcon} from "@material-ui/icons";
 import MenuSimple from './MenuSimple';
 import CartWidget from './CartWidget';
 import { Link } from 'react-router-dom';
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from '../firebase';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -75,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
 
 const NavBar = (props) => {
 
-  const [search, setSearch] = useState('');
+  const [items, setItems] = useState([]);
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -83,6 +85,34 @@ const NavBar = (props) => {
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const getMenuItems = async () => {
+    const itemsSnapshot = await getDocs(collection(db, 'categories'));
+    const itemsObj = itemsSnapshot.docs.map(item => {
+      return {idRef: item.id, ...item.data()};
+    })
+
+    const asyncItem = {
+      id: 1,
+      name: 'Categorias',
+      tipo: 'dropdown',
+      elementos: itemsObj
+    }
+
+    const initialItems = [
+      {id: 2, name: 'Productos', route: 'items'},
+      {id: 3, name: 'Ayuda'}
+    ];
+
+    setItems([asyncItem, ...initialItems])
+
+    console.log(items);
+
+  }
+
+  useEffect(() => {
+    getMenuItems();
+  }, [])
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -134,20 +164,6 @@ const NavBar = (props) => {
 
 const MenuItems = () => {
     let mobile = false;
-    const items = [
-      {
-        id: 1,
-        titulo: 'Categorias',
-        tipo: 'dropdown',
-        elementos: [
-          {titulo: 'Celulares', id: 1},
-          {titulo: 'Tablets', id: 2},
-          {titulo: 'Laptops', id: 3}
-        ]
-      },
-      {id: 2, titulo: 'Productos', route: 'items'},
-      {id: 3, titulo: 'Ayuda'}
-    ];
     let menuItems = items.map((item, index) => {
         let menuItem;
         switch (item.tipo) {
@@ -155,7 +171,7 @@ const MenuItems = () => {
                 menuItem = <MenuSimple key={index} item={item}></MenuSimple>
             break;
             default:
-                menuItem = <MenuItem key={index}><Link className={classes.link} to={`/${item.route}`}><Button style={{color: mobile ? "inherit" : "white"}}>{item.titulo}</Button></Link></MenuItem>
+                menuItem = <MenuItem key={index}><Link className={classes.link} to={`/${item.route}`}><Button style={{color: mobile ? "inherit" : "white"}}>{item.name}</Button></Link></MenuItem>
         }
         return menuItem;
     })

@@ -1,12 +1,12 @@
-import { Button, Card, Container, Grid } from '@material-ui/core';
+import { Card, Container, Grid } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { Skeleton } from '@material-ui/lab';
 import Price from './Price';
 import ItemCount from './ItemCount';
-import { useState, useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import { CartContext } from '../context/CartContext';
 
-const ItemDetail = ({id, title, price, image, stock}) => {
+const ItemDetail = ({id, title, price, image, stock, description}) => {
 
     const { addItem } = useContext(CartContext);
 
@@ -47,7 +47,7 @@ const ItemDetail = ({id, title, price, image, stock}) => {
                 <Grid container >
                     <Grid item sm={12} md={7} style={{width: '100%'}}>
                         <div style={{height: '400px', display: 'flex', justifyContent: 'center'}}>
-                            <img src={image} style={{width: '100%'}} />
+                            <img src={image} style={{height: '100%', width: 'auto'}} />
                         </div>
                     </Grid>
                     <Grid item sm={12} md={5} style={{width: '100%'}}>
@@ -60,6 +60,10 @@ const ItemDetail = ({id, title, price, image, stock}) => {
                         </Container>
                     </Grid>
                 </Grid>
+            </Card>
+            <Card style={{marginTop: '2rem', padding: '3rem'}}>
+                <h2>Sobre el producto</h2>
+                <p>{description}</p>
             </Card>
         </Container>
     )

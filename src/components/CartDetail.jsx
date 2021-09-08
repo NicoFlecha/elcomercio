@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import { Delete as DeleteIcon } from "@material-ui/icons";
 import ItemCount from "./ItemCount";
+import Price from "./Price";
 
 export const CartDetail = () => {
     
@@ -15,24 +16,38 @@ export const CartDetail = () => {
                 {
                     cartItems.length > 0 ? (
                         <>
-                            <Button variant='contained' color='secondary' onClick={() => clearCart()} >Limpiar carrito</Button>
+                            <Grid container>
+                                <Grid item xs={1}></Grid>
+                                <Grid item xs={8} md={6} style={{padding: '1rem'}}> 
+                                    <span><b>Producto</b></span>
+                                </Grid>
+                                <Grid item xs={1} md={3} style={{padding: '1rem'}}> 
+                                    <span><b>Cantidad en Carrito</b></span>
+                                </Grid>
+                                <Grid item xs={2} style={{display: 'flex', width: '100%', justifyContent: 'center', alignItems: 'center'}}> 
+                                    <Button variant='contained' color='secondary' onClick={() => clearCart()} >Limpiar carrito</Button>
+                                </Grid>
+                            </Grid>
                             {
                                 cartItems.map(item => (
                                     <Grid container>
                                         <Grid item xs={1}></Grid>
                                         <Grid item xs={8} md={6} style={{margin: '0.5rem 0', padding: '1rem'}}>
                                             <Grid container style={{backgroundColor: 'lightgray', borderRadius: '10px', padding: '1rem'}}>
-                                                <Grid item xs={6}>
+                                                <Grid item xs={3}>
                                                     <div style={
                                                         {width: '100px', height: '100px', backgroundColor: 'white', borderRadius: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center'}
                                                     }>
                                                         <img src={item.image} style={{borderRadius: '10px', width: '100%'}} alt={item.title} />
                                                     </div>
                                                 </Grid>
-                                                <Grid item xs={6} style={{textAlign: 'center'}}>
-                                                    <h3 style={{margin: 0}}>
+                                                <Grid item xs={9} style={{display: 'flex', flexDirection: 'column', justifyContent: 'center',textAlign: 'center'}}>
+                                                    <h3 style={{margin: 0, fontSize: '1.5rem'}}>
                                                         <Link style={{color: 'inherit', textDecoration: 'none'}} to={`/items/${item.id}`}>{item.title}</Link>
                                                     </h3>
+                                                    <p style={{fontWeight: 'bold'}}>
+                                                        Subtotal: $<Price amount={item.price * item.quantity} />
+                                                    </p>
                                                 </Grid>
                                             </Grid>
                                         </Grid>

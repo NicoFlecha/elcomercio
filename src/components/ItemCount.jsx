@@ -3,7 +3,6 @@ import { Card, CardContent, CardActions, Grid, Button } from '@material-ui/core'
 import { Add as AddIcon, Remove as RemoveIcon, Delete as DeleteIcon } from '@material-ui/icons';
 import { CartContext } from '../context/CartContext';
 import { Link } from 'react-router-dom';
-import ItemDetail from './ItemDetail';
 
 const ItemCount = ({stockRaw = 0, initial = 0, item, onAdd, minimal = false}) => {
 
