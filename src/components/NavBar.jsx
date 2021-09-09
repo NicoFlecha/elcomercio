@@ -154,16 +154,15 @@ const NavBar = (props) => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-        <MenuItems/>
+        <MenuItems mobile={true} />
         <MenuItem>
           <CartWidget />
-          Carrito
         </MenuItem>
     </Menu>
   );
 
-const MenuItems = () => {
-    let mobile = false;
+const MenuItems = ({mobile = false}) => {
+    // let mobile = false;
     let menuItems = items.map((item, index) => {
         let menuItem;
         switch (item.tipo) {

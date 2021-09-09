@@ -43,7 +43,7 @@ const ItemDetail = ({id, title, price, image, stock, description}) => {
     return (
         <Container style={{marginTop: '2rem'}}>
             <Link to='/items'>Volver a Productos</Link>
-            <Card style={{marginTop: '2rem', padding: '3rem'}}>
+            <Card style={{marginTop: '2rem', padding: '2rem'}}>
                 <Grid container >
                     <Grid item sm={12} md={7} style={{width: '100%'}}>
                         <div style={{height: '400px', display: 'flex', justifyContent: 'center'}}>
@@ -61,7 +61,7 @@ const ItemDetail = ({id, title, price, image, stock, description}) => {
                     </Grid>
                 </Grid>
             </Card>
-            <Card style={{marginTop: '2rem', padding: '3rem'}}>
+            <Card style={{marginTop: '2rem', padding: '2rem'}}>
                 <h2>Sobre el producto</h2>
                 <p>{description}</p>
             </Card>

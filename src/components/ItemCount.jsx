@@ -30,17 +30,21 @@ const ItemCount = ({stockRaw = 0, initial = 0, item, onAdd, minimal = false}) =>
     }, [count])
 
     return (isInCart(idItem) && !minimal) ? (
-        <div style={{display: 'block'}}>
-            <Link to="/cart" style={{textDecoration: 'none', textAlign: 'center'}}>
-                <Button variant="contained" color="primary" size="large" style={{width: '70%'}}>Terminar Compra</Button>
-            </Link>
-            <Button variant="contained" color="secondary" size="large" style={{width: '20%', marginLeft: '10%'}} onClick={() => {removeItem(item); setStock(stockRaw)}}><DeleteIcon /></Button>
-        </div>
+        <Grid container>
+            <Grid item xs={9}>
+                <Link to="/cart" style={{textDecoration: 'none', textAlign: 'center'}}>
+                    <Button variant="contained" color="primary" size="large" style={{width: '70%'}}>Terminar Compra</Button>
+                </Link>
+            </Grid>
+            <Grid item xs={3}>
+                <Button variant="contained" color="secondary" size="large" style={{width: '20%', marginLeft: '10%'}} onClick={() => {removeItem(item); setStock(stockRaw)}}><DeleteIcon /></Button>
+            </Grid>
+        </Grid>
 
     )
     :
     (
-        <div style={{minWidth: '250px', maxWidth: '300px'}}>
+        <div style={{minWidth: '215px', maxWidth: '300px'}}>
             <Card variant="outlined" style={{backgroundColor: '#F4F5F4'}}>
                 <CardContent>
                     <Grid container justifyContent="space-around" alignItems="center" style={{backgroundColor: 'white', borderRadius: '5px'}}>

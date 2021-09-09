@@ -1,4 +1,4 @@
-import { Button, Container, Grid } from "@material-ui/core";
+import { Button, Container, Grid, Hidden } from "@material-ui/core";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
@@ -17,31 +17,33 @@ export const CartDetail = () => {
                     cartItems.length > 0 ? (
                         <>
                             <Grid container>
-                                <Grid item xs={1}></Grid>
-                                <Grid item xs={8} md={6} style={{padding: '1rem'}}> 
-                                    <span><b>Producto</b></span>
-                                </Grid>
-                                <Grid item xs={1} md={3} style={{padding: '1rem'}}> 
-                                    <span><b>Cantidad en Carrito</b></span>
-                                </Grid>
-                                <Grid item xs={2} style={{display: 'flex', width: '100%', justifyContent: 'center', alignItems: 'center'}}> 
+                                <Hidden only="xs">
+                                    <Grid item xs={1}></Grid>
+                                    <Grid item xs={8} md={6} style={{padding: '1rem'}}> 
+                                        <span><b>Producto</b></span>
+                                    </Grid>
+                                    <Grid item xs={1} md={3} style={{padding: '1rem'}}> 
+                                        <span><b>Cantidad en Carrito</b></span>
+                                    </Grid>
+                                </Hidden>
+                                <Grid item xs={12} sm={2} style={{display: 'flex', width: '100%', justifyContent: 'center', alignItems: 'center'}}> 
                                     <Button variant='contained' color='secondary' onClick={() => clearCart()} >Limpiar carrito</Button>
                                 </Grid>
                             </Grid>
                             {
                                 cartItems.map(item => (
                                     <Grid container>
-                                        <Grid item xs={1}></Grid>
-                                        <Grid item xs={8} md={6} style={{margin: '0.5rem 0', padding: '1rem'}}>
+                                        <Grid item xs={0} md={1}></Grid>
+                                        <Grid item xs={12} sm={6} style={{margin: '0.5rem 0', padding: '1rem'}}>
                                             <Grid container style={{backgroundColor: 'lightgray', borderRadius: '10px', padding: '1rem'}}>
-                                                <Grid item xs={3}>
+                                                <Grid item xs={12} sm={3} style={{display: 'flex', justifyContent: 'center'}}>
                                                     <div style={
                                                         {width: '100px', height: '100px', backgroundColor: 'white', borderRadius: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center'}
                                                     }>
                                                         <img src={item.image} style={{borderRadius: '10px', width: '100%'}} alt={item.title} />
                                                     </div>
                                                 </Grid>
-                                                <Grid item xs={9} style={{display: 'flex', flexDirection: 'column', justifyContent: 'center',textAlign: 'center'}}>
+                                                <Grid item xs={12} md={9} style={{display: 'flex', flexDirection: 'column', justifyContent: 'center',textAlign: 'center'}}>
                                                     <h3 style={{margin: 0, fontSize: '1.5rem'}}>
                                                         <Link style={{color: 'inherit', textDecoration: 'none'}} to={`/items/${item.id}`}>{item.title}</Link>
                                                     </h3>
@@ -51,7 +53,7 @@ export const CartDetail = () => {
                                                 </Grid>
                                             </Grid>
                                         </Grid>
-                                        <Grid item xs={2} md={3} style={{margin: '0.5rem 0', padding: '1rem'}}>
+                                        <Grid item xs={10} sm={3} style={{margin: '0.5rem 0', padding: '1rem'}}>
                                             <div style={{height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                                                 <ItemCount 
                                                     minimal={true} 
@@ -62,7 +64,7 @@ export const CartDetail = () => {
                                                 />
                                             </div>
                                         </Grid>
-                                        <Grid item xs={1}>
+                                        <Grid item xs={2} md={1}>
                                             <div style={{height: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
                                                 <Button variant="text" onClick={() => removeItem(item)}>
                                                     <DeleteIcon color='secondary' />
