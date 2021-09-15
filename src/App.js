@@ -7,11 +7,14 @@ import ProductList from './pages/ProductList';
 import Product from './pages/Product';
 import { useEffect, useState } from 'react';
 import { Cart } from './pages/Cart';
+import { addDoc, collection, doc, documentId, getDocs, increment, query, Timestamp, where, writeBatch } from '@firebase/firestore';
+import { db } from './firebase';
 
 function App() {
   
   const [cartItems, setCartItems] = useState([]);
   const [cartLength, setCartLength] = useState(0);
+  const [cartTotal, setCartTotal] = useState(0);
 
   const addItem = (item) => {
 
@@ -53,20 +56,68 @@ function App() {
     return cartItems.find(i => i.id === idItem);
   }
 
+  const validateCheckoutUser = (user) => user.name && user.email && user.cellphone;
+
+  const buyCart = async (user) => {
+
+    if (!validateCheckoutUser(user)) return alert('Debe completar los datos para terminar la compra');
+    
+    const itemsIds = cartItems.map(item => item.id);
+
+    const q = query(collection(db, 'products'), where(documentId(), 'in', itemsIds));
+
+    const productsSnapshot = await getDocs(q);
+
+    const rechazados = productsSnapshot.docs.filter(product => product.data().stock < cartItems.find(item => item.id == product.id).quantity);
+
+    if (rechazados.length > 0) {
+      alert('Productos sin stock suficiente: ' + rechazados.map(rechazado => rechazado.data().title).join(', '));
+    } else {
+      return createOrder(user);
+    }
+
+  }
+
+  const createOrder = async (user) => {
+    let order = {
+      items: cartItems,
+      buyer: user,
+      date: Timestamp.fromDate(new Date()),
+      total: cartTotal
+    }
+
+    const batch = new writeBatch(db);
+
+    cartItems.forEach(item => {
+      const productRef = doc(db, 'products', item.id);
+      batch.update(productRef, {stock: increment(-item.quantity)});
+    })
+
+    batch.commit();
+
+    const orderRef = await addDoc(collection(db, 'orders'), order);
+    alert('Orden creada: ' + orderRef.id);
+    clearCart();
+  }
+
   useEffect(() => {
 
     let length = 0;
+    let total = 0;
 
-      cartItems.forEach(item => {
-        length += item.quantity;
-      })
+    cartItems.forEach(item => {
+      length += item.quantity;
+      total += item.quantity * item.price;
+    })
 
     setCartLength(length);
+    setCartTotal(total);
+    console.log(total);
 
   }, [cartItems])
 
   return (
-    <CartContext.Provider value={{cartItems, setCartItems, addItem, removeItem, clearCart, isInCart, cartLength}}>
+    <CartContext.Provider value={{cartItems, setCartItems, addItem, removeItem, clearCart, isInCart, cartLength, cartTotal, buyCart}}>
       <BrowserRouter>
         <NavBar></NavBar>
         <Switch>

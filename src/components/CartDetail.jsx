@@ -5,6 +5,7 @@ import { CartContext } from "../context/CartContext";
 import { Delete as DeleteIcon } from "@material-ui/icons";
 import ItemCount from "./ItemCount";
 import Price from "./Price";
+import { CartModal } from "./CartModal";
 
 export const CartDetail = () => {
     
@@ -74,6 +75,14 @@ export const CartDetail = () => {
                                     </Grid>
                                 ))
                             }
+                            <Grid container>
+                                <Hidden only="xs">
+                                    <Grid item sm={10} />
+                                </Hidden>
+                                <Grid item xs={12} sm={2} style={{display: 'flex', width: '100%', justifyContent: 'center', alignItems: 'center'}}> 
+                                    <CartModal />
+                                </Grid>
+                            </Grid>
                         </>
                     ) : (
                         <div style={{textAlign: 'center'}}>
